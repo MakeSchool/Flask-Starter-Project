@@ -10,7 +10,6 @@ mongo = MongoClient('localhost', 27017)
 app.db = mongo.develop_database
 api = Api(app)
 
-
 class MyObject(Resource):
 
     def post(self):
@@ -18,14 +17,13 @@ class MyObject(Resource):
       myobject_collection = app.db.myobjects
       result = myobject_collection.insert_one(request.json)
 
-      myobject = myobject_collection.find_one(ObjectId(result.inserted_id))
+      myobject = myobject_collection.find_one({"_id": ObjectId(result.inserted_id)})
 
       return myobject
 
     def get(self, myobject_id):
       myobject_collection = app.db.myobjects
-      myobject = myobject_collection.find_one(ObjectId(myobject_id))
-      # import pdb; pdb.set_trace()
+      myobject = myobject_collection.find_one({"_id": ObjectId(myobject_id)})
       return myobject
 
 api.add_resource(MyObject, '/myobject/','/myobject/<string:myobject_id>')
