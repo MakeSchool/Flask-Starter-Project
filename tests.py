@@ -50,5 +50,9 @@ class FlaskrTestCase(unittest.TestCase):
       self.assertEqual(response.status_code, 200)
       assert 'Another object' in responseJSON["name"]
 
+    def test_getting_non_existent_trip(self):
+      response = self.app.get('/myobject/55f0cbb4236f44b7f0e3cb23')
+      self.assertEqual(response.status_code, 404)
+
 if __name__ == '__main__':
     unittest.main()

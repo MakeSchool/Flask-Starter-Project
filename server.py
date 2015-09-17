@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, jsonify
 from flask_restful import Resource, Api
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -25,7 +25,13 @@ class MyObject(Resource):
     def get(self, myobject_id):
       myobject_collection = app.db.myobjects
       myobject = myobject_collection.find_one({"_id": ObjectId(myobject_id)})
-      return myobject
+
+      if myobject is None:
+        response = jsonify(data=[])
+        response.status_code = 404
+        return response
+      else:
+        return myobject
 
 # Add REST resource to API
 api.add_resource(MyObject, '/myobject/','/myobject/<string:myobject_id>')
