@@ -1,15 +1,16 @@
-import json
-from flask import Flask, request, make_response, Response, jsonify
+from flask import Flask, request, make_response
 from flask_restful import Resource, Api
 from pymongo import MongoClient
-from utils.mongo_json_encoder import JSONEncoder
 from bson.objectid import ObjectId
+from utils.mongo_json_encoder import JSONEncoder
 
+# Basic Setup
 app = Flask(__name__)
 mongo = MongoClient('localhost', 27017)
 app.db = mongo.develop_database
 api = Api(app)
 
+#Implement REST Resource
 class MyObject(Resource):
 
     def post(self):
@@ -26,6 +27,7 @@ class MyObject(Resource):
       myobject = myobject_collection.find_one({"_id": ObjectId(myobject_id)})
       return myobject
 
+# Add REST resource to API
 api.add_resource(MyObject, '/myobject/','/myobject/<string:myobject_id>')
 
 # provide a custom JSON serializer for flaks_restful

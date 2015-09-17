@@ -1,12 +1,7 @@
-import os
 import server
 import unittest
-import tempfile
 import json
-import base64
 from pymongo import MongoClient
-
-db = None
 
 class FlaskrTestCase(unittest.TestCase):
 
@@ -17,7 +12,6 @@ class FlaskrTestCase(unittest.TestCase):
 
       # Inject test database into application
       mongo = MongoClient('localhost', 27017)
-      global db
       db = mongo.test_database
       server.app.db = db
 
