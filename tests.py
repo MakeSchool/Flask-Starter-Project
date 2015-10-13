@@ -34,7 +34,7 @@ class FlaskrTestCase(unittest.TestCase):
       assert 'A object' in responseJSON["name"]
 
   
-    def test_getting_trip(self):
+    def test_getting_object(self):
       response = self.app.post('/myobject/', 
         data=json.dumps(dict(
           name="Another object"
@@ -50,7 +50,7 @@ class FlaskrTestCase(unittest.TestCase):
       self.assertEqual(response.status_code, 200)
       assert 'Another object' in responseJSON["name"]
 
-    def test_getting_non_existent_trip(self):
+    def test_getting_non_existent_object(self):
       response = self.app.get('/myobject/55f0cbb4236f44b7f0e3cb23')
       self.assertEqual(response.status_code, 404)
 
