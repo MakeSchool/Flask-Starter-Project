@@ -21,36 +21,36 @@ class FlaskrTestCase(unittest.TestCase):
 
         # MyObject tests
 
-        def test_posting_myobject(self):
-            response = self.app.post(
-                '/myobject/',
-                data=json.dumps(dict(name="A object")),
-                content_type='application/json')
+    def test_posting_myobject(self):
+        response = self.app.post(
+            '/myobject/',
+            data=json.dumps(dict(name="A object")),
+            content_type='application/json')
 
-            responseJSON = json.loads(response.data.decode())
+        responseJSON = json.loads(response.data.decode())
 
-            self.assertEqual(response.status_code, 200)
-            assert 'application/json' in response.content_type
-            assert 'A object' in responseJSON["name"]
+        self.assertEqual(response.status_code, 200)
+        assert 'application/json' in response.content_type
+        assert 'A object' in responseJSON["name"]
 
-        def test_getting_object(self):
-            response = self.app.post(
-                '/myobject/',
-                data=json.dumps(dict(name="Another object")),
-                content_type='application/json')
+    def test_getting_object(self):
+        response = self.app.post(
+            '/myobject/',
+            data=json.dumps(dict(name="Another object")),
+            content_type='application/json')
 
-            postResponseJSON = json.loads(response.data.decode())
-            postedObjectID = postResponseJSON["_id"]
+        postResponseJSON = json.loads(response.data.decode())
+        postedObjectID = postResponseJSON["_id"]
 
-            response = self.app.get('/myobject/' + postedObjectID)
-            responseJSON = json.loads(response.data.decode())
+        response = self.app.get('/myobject/' + postedObjectID)
+        responseJSON = json.loads(response.data.decode())
 
-            self.assertEqual(response.status_code, 200)
-            assert 'Another object' in responseJSON["name"]
+        self.assertEqual(response.status_code, 200)
+        assert 'Another object' in responseJSON["name"]
 
-        def test_getting_non_existent_object(self):
-            response = self.app.get('/myobject/55f0cbb4236f44b7f0e3cb23')
-            self.assertEqual(response.status_code, 404)
+    def test_getting_non_existent_object(self):
+        response = self.app.get('/myobject/55f0cbb4236f44b7f0e3cb23')
+        self.assertEqual(response.status_code, 404)
 
 if __name__ == '__main__':
     unittest.main()
