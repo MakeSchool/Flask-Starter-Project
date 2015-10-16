@@ -19,7 +19,8 @@ class MyObject(Resource):
         myobject_collection = app.db.myobjects
         result = myobject_collection.insert_one(request.json)
 
-        myobject = myobject_collection.find_one({"_id": ObjectId(result.inserted_id)})
+        myobject = myobject_collection.find_one(
+            {"_id": ObjectId(result.inserted_id)})
 
         return myobject
 
